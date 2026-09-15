@@ -14,9 +14,11 @@ TEST = POLICIES / "test"
 
 CASES = [
     ("CKV2_CUSTOM_AWS_1", POLICIES / "aws", TEST / "aws" / "bad", TEST / "aws" / "good"),
-    ("CKV2_CUSTOM_AWS_2", POLICIES / "aws", TEST / "aws" / "bad", TEST / "aws" / "good"),
     ("CKV2_CUSTOM_AZURE_1", POLICIES / "azure", TEST / "azure" / "bad", TEST / "azure" / "good"),
     ("CKV2_CUSTOM_AZURE_2", POLICIES / "azure", TEST / "azure" / "bad", TEST / "azure" / "good"),
+    # Draft: written and tested, but NOT referenced by any consuming repo's
+    # external_checks_dirs yet - see custom_policies/draft/aws/README below.
+    ("CKV2_CUSTOM_AWS_2", POLICIES / "draft" / "aws", TEST / "draft" / "aws" / "bad", TEST / "draft" / "aws" / "good"),
 ]
 
 

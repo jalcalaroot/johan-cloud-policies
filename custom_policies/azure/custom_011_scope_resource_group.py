@@ -15,6 +15,31 @@ from checkov.terraform.checks.resource.base_resource_check import BaseResourceCh
 # in its own name).
 _SUBSCRIPTION_ROOT = re.compile(r"^/subscriptions/[^/]+$")
 
+# Some Azure built-in roles are near-exclusively meaningful at subscription
+# (or management group) scope for a single-subscription account like this
+# one - Policy assignment and Cost Management don't have a resource-group
+# equivalent that does the same job. Verified against real usage in
+# jalcalaroot-azure-bootstrap/terraform/environments/dev/identities.tf
+# (dev_agent_policy_contributor, dev_agent_cost_management_contributor,
+# dev_plan_cost_management_reader) before adding this exemption - these are
+# genuine subscription-scoped needs, not a rule loophole.
+#
+# Deliberately NOT exempted: generic roles like "Reader" or "Contributor"
+# CAN legitimately need subscription scope (e.g. a plan role that reads
+# state across every resource group), but are just as commonly
+# resource-group-scoped - there's no name-based way to tell those apart
+# safely. A genuinely-needed subscription-scoped "Reader" should get an
+# inline #checkov:skip with its own justification, same as any other
+# accepted Checkov exception in this account's repos, rather than a
+# blanket exemption here that would also hide a real overscoping mistake.
+_SUBSCRIPTION_SCOPED_ROLES = {
+    "policy contributor",
+    "resource policy contributor",
+    "policy reader",
+    "cost management contributor",
+    "cost management reader",
+}
+
 
 class ScopeToResourceGroup(BaseResourceCheck):
     def __init__(self) -> None:
@@ -25,6 +50,10 @@ class ScopeToResourceGroup(BaseResourceCheck):
         super().__init__(name=name, id=id, categories=categories, supported_resources=supported_resources)
 
     def scan_resource_conf(self, conf: Dict[str, List[Any]]) -> CheckResult:
+        role = conf.get("role_definition_name")
+        if role and role[0] and str(role[0]).strip().lower() in _SUBSCRIPTION_SCOPED_ROLES:
+            return CheckResult.PASSED
+
         scope = conf.get("scope")
         if not scope or not scope[0]:
             return CheckResult.PASSED
