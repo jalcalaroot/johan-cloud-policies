@@ -1,6 +1,11 @@
 resource "azurerm_resource_group" "example" {
   name     = "example-rg"
   location = "eastus"
+
+  tags = {
+    Owner       = "platform-team"
+    Environment = "dev"
+  }
 }
 
 resource "azurerm_role_assignment" "scoped_contributor" {

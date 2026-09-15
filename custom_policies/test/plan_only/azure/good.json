@@ -1,0 +1,76 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.16.2",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_role_assignment.rg_scoped",
+          "mode": "managed",
+          "type": "azurerm_role_assignment",
+          "name": "rg_scoped",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "scope": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg",
+            "role_definition_name": "Reader",
+            "principal_id": "11111111-1111-1111-1111-111111111111"
+          }
+        },
+        {
+          "address": "azurerm_role_assignment.acr_scoped",
+          "mode": "managed",
+          "type": "azurerm_role_assignment",
+          "name": "acr_scoped",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "scope": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.ContainerRegistry/registries/exampleacr",
+            "role_definition_name": "AcrPull",
+            "principal_id": "22222222-2222-2222-2222-222222222222"
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "azurerm_role_assignment.rg_scoped",
+      "mode": "managed",
+      "type": "azurerm_role_assignment",
+      "name": "rg_scoped",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "scope": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg",
+          "role_definition_name": "Reader",
+          "principal_id": "11111111-1111-1111-1111-111111111111"
+        },
+        "after_unknown": {},
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "azurerm_role_assignment.acr_scoped",
+      "mode": "managed",
+      "type": "azurerm_role_assignment",
+      "name": "acr_scoped",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "scope": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example-rg/providers/Microsoft.ContainerRegistry/registries/exampleacr",
+          "role_definition_name": "AcrPull",
+          "principal_id": "22222222-2222-2222-2222-222222222222"
+        },
+        "after_unknown": {},
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    }
+  ]
+}

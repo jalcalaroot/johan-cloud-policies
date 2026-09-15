@@ -1,0 +1,44 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.16.2",
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_role_assignment.management_group_scoped",
+          "mode": "managed",
+          "type": "azurerm_role_assignment",
+          "name": "management_group_scoped",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "scope": "/providers/Microsoft.Management/managementGroups/example-mg",
+            "role_definition_name": "Reader",
+            "principal_id": "44444444-4444-4444-4444-444444444444"
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "azurerm_role_assignment.management_group_scoped",
+      "mode": "managed",
+      "type": "azurerm_role_assignment",
+      "name": "management_group_scoped",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "scope": "/providers/Microsoft.Management/managementGroups/example-mg",
+          "role_definition_name": "Reader",
+          "principal_id": "44444444-4444-4444-4444-444444444444"
+        },
+        "after_unknown": {},
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    }
+  ]
+}
