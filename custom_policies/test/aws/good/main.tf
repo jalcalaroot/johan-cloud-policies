@@ -20,3 +20,21 @@ data "aws_iam_policy_document" "deny_wildcard_is_fine" {
     }
   }
 }
+
+resource "aws_iam_role" "tagged" {
+  name = "example-tagged-role"
+  assume_role_policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = [{ Effect = "Allow", Action = "sts:AssumeRole", Principal = { Service = "ec2.amazonaws.com" } }]
+  })
+
+  tags = {
+    Owner       = "platform-team"
+    Environment = "dev"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "scoped_attachment" {
+  role       = aws_iam_role.tagged.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
